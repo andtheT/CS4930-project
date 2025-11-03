@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-w*tj3#$u)!i5x^)fp(e22rx*+nue96pku=n=dfnmr*5_#kjsac
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'PolicyMonster.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['pm_app/templates/pm_app/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
