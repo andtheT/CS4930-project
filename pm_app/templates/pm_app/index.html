@@ -1,12 +1,10 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}
   Policy Monster Homepage
 {% endblock title %}
 
 {% block content %}
-
-
 
 <html lang="en">
 <head>
@@ -15,7 +13,55 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Hello</p>
+    <!--top section-->
+    <section class="bg-dark text-light p-5 text-center">
+        <div class="container">
+            <div class="flex-sm justify-content-center">
+                <img class="img-fluid " src="static/pm_app/pm_logo.png" style="width: 200px;"></img>
+            </div>
+
+            <div class="d-sm-flex justify-content-center">       
+                <h1 class="text-light fs-1 fw-bold">Policy Monster</h1>
+            </div>
+
+        </div>
+    </section>
+    <section class="bg-light text-dark p-5 text-center">
+        <div class="d-sm-flex justify-content-center">
+            <div class="input-group mb-3" style="width: 800px;">
+                <input type="text" class="form-control" placeholder="Paste URL here..." aria-label="Paste URL here..." aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Go</button>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    <section class="bg-dark text-light">
+        <div class="d-sm-flex flex-row justify-content-evenly">
+            <div class="p-2">
+                <h2>Our Mission</h2>
+                <span>
+                    We know it's hard to resist the temptation to... (Finish)
+                </span>
+            </div>
+            <div class="p-2">
+                <h2>How it Works</h2>
+                <span>
+                    Policy Monster makes it fast and easy to find the privacy policy or ToS
+                    of a website, no downloading files or goose-chasing necessary. Simply 
+                    enter the URL and Policy Monster will automatically locate the policy
+                    and get right to work.
+                </span>
+            </div>
+            <div class="p-2">
+                <h2>Something else</h2>
+                <span>
+                    test
+                </span>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
 
