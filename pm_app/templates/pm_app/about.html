@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Policy Monster About Page
+{% endblock title %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--top section-->
+    <section class="text-light p-5 text-center" style="background: #000;color:black">
+        <div class="container">
+            <div class="flex-sm justify-content-center">
+                <img class="img-fluid " src="static/pm_app/pm_logo.png" style="width: 200px;"></img>
+            </div>
+
+            <div class="d-sm-flex justify-content-center">       
+                <h1 class="text-light fs-1 fw-bold">About Us</h1>
+            </div>
+
+        </div>
+    </section>
+    <!--boxes-->
+     <section class="p-5 blue-800">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <h2 class="card-title mb-3">Test</h2> 
+                            <p class="card-body">
+                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, hic, soluta aperiam perspiciatis labore ad non natus fuga aliquid, cumque a officia itaque eaque delectus earum aliquam numquam placeat distinctio.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+    <!--Team Cards-->
+    <section id="team" class="p-5 bg-primary">
+        <div class="container justify-content-center">
+            <h2 class="text-center text-white">Our Team</h2>
+            <p class="lead text-center text-white mb-5">
+                testing testing
+            </p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-3 p-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="static/pm_app/M_Profile.jpeg" class=" img-fluid rounded-circle mb-3" alt="Maddison's Profile"/>
+                            <h3 class="card-title mb-3">Maddison Ratzlaff</h3>
+                            <p class="card-text">
+                                Maddison is blah blah blah
+                            </p>
+                        </div>
+                    </div>
+                </div>  
+                <div class="col-md-6 col-lg-3 p-3">  
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="static/pm_app/M_Profile.jpeg" class=" img-fluid rounded-circle mb-3" alt="Maddison's Profile"/>
+                            <h3 class="card-title mb-3">Andrew Theriot</h3>
+                            <p class="card-text">
+                                Andrew is blah blah blah
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 p-3">  
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="static/pm_app/M_Profile.jpeg" class=" img-fluid rounded-circle mb-3" alt="Maddison's Profile"/>
+                            <h3 class="card-title mb-3">Rachel Promersberger</h3>
+                            <p class="card-text">
+                                Rachel is blah blah blah
+                            </p>
+                        </div>
+                    </div>
+                </div>      
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+{% endblock %}
