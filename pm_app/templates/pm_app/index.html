@@ -12,9 +12,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .transparent-input::placeholder {
+    color: rgba(255,255,255,0.7); /* placeholder color */
+}
+</style>
+
 <body>
     <!--top section-->
-    <section class="bg-dark text-light p-5 text-center">
+    <section class="text-light p-5 text-center" style="font-family: Verdana, Tahoma, sans-serif;">
         <div class="container">
             <div class="flex-sm justify-content-center">
                 <img class="img-fluid " src="static/pm_app/pm_logo.png" style="width: 200px;"></img>
@@ -26,50 +32,57 @@
 
         </div>
     </section>
-    <section class="bg-primary text-dark p-5 text-center">
+    <!--URL input-->
+    <section class="text-light p-5 text-center">
         <div class="d-sm-flex justify-content-center">
-            <div class="input-group mb-3" style="width: 800px;">
-                <input type="text" class="form-control" placeholder="Paste URL here..." aria-label="Paste URL here..." aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn bg-dark btn-outline-secondary" type="button">Go</button>
-                </div>
+            <div class="input-group input-group-lg mb-3" style="max-width: 1300px;">
+                <input type="text" class="form-control transparent-input" 
+                style="height: 60px; background-color: transparent !important; border: 1px solid #fff; color: #fff;" 
+                placeholder="Paste URL here..." aria-label="Paste URL here..." aria-describedby="basic-addon2">
+               <a href="results" class="btn ms-2 btn-dark text-light" style="height: 60px; border-radius: 10px !important; 
+               padding-left: 25px; padding-right: 25px; border: 1px solid #fff; color: #fff;">Go</a>
             </div>
         </div>
     </section>
     <!--boxes-->
-    <section class="p-5 blue-800">
+    <section class="p-5 blue-800" style="font-family: Verdana, Tahoma, sans-serif;">
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
-                    <div class="card bg-dark text-light">
+                    <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100">
                         <div class="card-body text-center">
                             <h2 class="card-title mb-3">Our Mission</h2> 
                             <p class="card-body">
-                             We know it's hard to resist the temptation to... (Finish)
-                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, hic, soluta aperiam perspiciatis labore ad non natus fuga aliquid, cumque a officia itaque eaque delectus earum aliquam numquam placeat distinctio.
+                             We know that almost no one is reading privacy policies or terms of service, and 
+                             we don't blame anyone for that. No one has the time! But these documents contain 
+                             important information about how the service will use your personal information. We 
+                             believe everyone has the right to be able to make informed decisions about their 
+                             online presence and data, and our mission is to make these decisions easier and faster.
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="card bg-dark text-light">
+                    <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100">
                         <div class="card-body text-center">
                             <h2 class="card-title mb-3">How it Works</h2>
                             <p class="card-body">
                             Policy Monster makes it fast and easy to find the privacy policy or ToS
                             of a website, no downloading files or goose-chasing necessary. Simply 
                             enter the URL and Policy Monster will automatically locate the policy
-                            and get right to work.
+                            and get right to work. You will be automatically redirected to the results page.
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="card bg-dark text-light">
+                    <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100">
                         <div class="card-body text-center">
-                            <h2 class="card-title mb-3">Something Else</h2>
+                            <h2 class="card-title mb-3">Support</h2>
                             <p class="card-body">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo adipisci tempora nostrum. Dolores libero rem accusamus consequuntur quae, officia dignissimos dolorem ut praesentium impedit quod iste nulla incidunt perferendis maiores?
+                                We are a group of students who made this website for a group project as 
+                                partial fulfillment for CS4930: Privacy and Censorship. If you would like to
+                                pay us lots of money to continue to upkeep this website, please email us!
                             </p>
                         </div>
                     </div>

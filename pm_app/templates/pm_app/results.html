@@ -5,5 +5,42 @@
 {% endblock title %}
 
 {% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <!--top section-->
+    <section class="text-light p-5 text-center" style="font-family: Verdana, Tahoma, sans-serif;">
+        <div class="container">
+            <div class="flex-sm justify-content-center">
+                <img class="img-fluid " src="static/pm_app/pm_logo.png" style="width: 200px;"></img>
+            </div>
 
+            <div class="d-sm-flex justify-content-center" style="font-family: Verdana, Tahoma, sans-serif;">       
+                <h1 class="text-light fs-1 fw-bold">Privacy</h1>
+            </div>
+
+        </div>
+    </section>
+
+    <!--boxes-->
+     <section class="p-5 blue-800">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md">
+                    <div class="card bg-dark bg-opacity-50 text-light" style="font-family: Verdana, Tahoma, sans-serif;">
+                        <div class="card-body">
+                            <p class="card-body fs-5  text-start">
+                                Results will go here
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+</body>
 {% endblock %}

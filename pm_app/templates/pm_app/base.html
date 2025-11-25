@@ -14,9 +14,9 @@
 </head>
 <body>
     <!--navbar-->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="font-family: Verdana, Tahoma, sans-serif;">
         <div class="container">
-            <a href="#" class="navbar-brand">Policy Monster</a>
+            <a href="home" class="navbar-brand">Policy Monster</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                 <span class="navbar-toggler-icon">
 
@@ -24,9 +24,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="howitworks" class="nav-link">How It Works</a>
-                    </li>
                     <li class="nav-item">
                         <a href="about" class="nav-link">About Us</a>
                     </li>
@@ -37,12 +34,18 @@
             </div>
         </div>
     </nav>
+<style>
+  body {
+    background: #231d38;
+    background: linear-gradient(0deg,rgba(35, 29, 56, 1) 0%, rgba(43, 36, 89, 1) 50%, rgba(35, 29, 56, 1) 100%); 
+  }
+</style>
 
 {% block content %}
 {% endblock %}
 
 <!--footer-->
-<footer class="p-3 bg-dark text-white text-center position-relative">
+<footer class="p-3 text-white text-center position-relative">
     <div class="container">
         <p class="lead">Copyright &copy; 2025 Policy Monster</p>
         <a href="#" class="position-absolute bottom-0 end-0 p-3">
