@@ -22,4 +22,4 @@ Our proposed solution is a website that processes privacy policies and provides 
 4. Activate virtual environment using `source env_name/bin/activate`
 5. Install Django using `pip install Django`
 6. In the project directory, use command `python3 manage.py runserver` to start development server
-7. In web browser, navigate to http://127.0.0.1:8000/ to see web page
+7. In web browser, navigate to http://127.0.0.1:8000/home to see web home page
