@@ -12,8 +12,8 @@ Our proposed solution is a website that processes privacy policies and provides 
 - Python: Backend, API calls, etc.
 - HTML/CSS/JavaScript: frontend UX/UI
 ### Frameworks and Libraries
-- Bootstrap
-- Scrapy
+- Bootstrap: HTML library
+- BeautifulSoup: web scraping
 
 ## Demo Instructions
 1. Clone Repository to local machine
