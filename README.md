@@ -21,5 +21,6 @@ Our proposed solution is a website that processes privacy policies and provides 
 3. Optional, recommended: create a virtual environment using `python3 -m venv venv_name` (Must have Python installed)
 4. Activate virtual environment using `source env_name/bin/activate`
 5. Install Django using `pip install Django`
-6. In the project directory, use command `python3 manage.py runserver` to start development server
-7. In web browser, navigate to http://127.0.0.1:8000/home to see web home page
+6. Install beautifulsoup and requests using `pip install requests beautifulsoup4`
+7. In the project directory, use command `python3 manage.py runserver` to start development server
+8. In web browser, navigate to http://127.0.0.1:8000/home to see web home page
