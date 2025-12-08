@@ -16,7 +16,7 @@ Our proposed solution is a website that processes privacy policies and provides 
 - BeautifulSoup: web scraping
 
 ## Demo Instructions
-# Mac Instructions 
+### Mac Instructions 
 1. Clone Repository to local machine `git clone <repository_url>`
 2. Navigate to repository directory in VS Code Terminal: `cd path/to/directory`
 3. Optional, recommended: create a virtual environment `python3 -m venv venv_name` (Must have Python installed)
@@ -26,7 +26,7 @@ Our proposed solution is a website that processes privacy policies and provides 
 7. In the project directory, start development server `python3 manage.py runserver`
 8. In web browser, navigate to http://127.0.0.1:8000/home
 
-# Windows Instructons
+### Windows Instructons
 1. Clone Repository to local machine with `git clone <repository_url>`
 2. Navigate to repository directory in VS Code Terminal: `cd path\to\directory`
 3. 3. Optional, recommended: create a virtual environment using `python3 -m venv venv_name` (Must have Python installed)
