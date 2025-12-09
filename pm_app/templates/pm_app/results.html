@@ -1,46 +1,294 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Policy Monster Results Page
+  Policy Monster - Analysis Results
 {% endblock title %}
 
 {% block content %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-      <!--top section-->
-    <section class="text-light p-5 text-center" style="font-family: Verdana, Tahoma, sans-serif;">
-        <div class="container">
-            <div class="flex-sm justify-content-center">
-                <img class="img-fluid " src="static/pm_app/pm_logo.png" style="width: 200px;"></img>
-            </div>
+<style>
+    .grade-badge {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0 auto;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    .grade-badge::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) rotate(45deg); }
+    }
+    .grade-a { background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); }
+    .grade-b { background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%); }
+    .grade-c { background: linear-gradient(135deg, #fdcb6e 0%, #ffeaa7 100%); color: #2d3436; }
+    .grade-d { background: linear-gradient(135deg, #e17055 0%, #fab1a0 100%); }
+    .grade-f { background: linear-gradient(135deg, #d63031 0%, #ff7675 100%); }
+    .grade-na { background: linear-gradient(135deg, #636e72 0%, #b2bec3 100%); }
+    
+    .grade-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 1rem;
+    }
+    
+    .analysis-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .section-header {
+        color: #9b59b6;
+        border-bottom: 2px solid rgba(155, 89, 182, 0.3);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .analysis-content {
+        line-height: 1.8;
+    }
+    
+    .analysis-content h1, .analysis-content h2, .analysis-content h3 {
+        color: #bb86fc;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .analysis-content strong {
+        color: #e0b0ff;
+    }
+    
+    .analysis-content ul, .analysis-content ol {
+        margin-left: 1rem;
+    }
+    
+    .analysis-content li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .url-badge {
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem;
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .error-card {
+        background: linear-gradient(135deg, rgba(214, 48, 49, 0.2) 0%, rgba(255, 118, 117, 0.1) 100%);
+        border: 1px solid rgba(214, 48, 49, 0.3);
+    }
+    
+    .back-btn {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.5);
+    }
+    
+    .preview-box {
+        background: rgba(0,0,0,0.2);
+        border-radius: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        font-size: 0.85rem;
+        opacity: 0.8;
+    }
+    
+    .highlight-good { color: #00b894; }
+    .highlight-warning { color: #fdcb6e; }
+    .highlight-bad { color: #ff7675; }
+</style>
 
-            <div class="d-sm-flex justify-content-center" style="font-family: Verdana, Tahoma, sans-serif;">       
-                <h1 class="text-light fs-1 fw-bold">Privacy</h1>
-            </div>
-
+<!-- Top section -->
+<section class="text-light p-4 text-center" style="font-family: 'Segoe UI', Verdana, Tahoma, sans-serif;">
+    <div class="container">
+        <div class="flex-sm justify-content-center">
+            {% load static %}
+            <img class="img-fluid" src="{% static 'pm_app/pm_logo.png' %}" style="width: 120px;" alt="Policy Monster Logo">
         </div>
-    </section>
 
-    <!--boxes-->
-     <section class="p-5 blue-800">
-        <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md">
-                    <div class="card bg-dark bg-opacity-50 text-light" style="font-family: Verdana, Tahoma, sans-serif;">
-                        <div class="card-body">
-                            <p class="card-body fs-5  text-start">
-                                Results will go here
-                            </p>
+        <div class="d-sm-flex justify-content-center mt-2">       
+            <h1 class="text-light fs-2 fw-bold">Privacy Policy Analysis</h1>
+        </div>
+        
+        {% if url %}
+        <div class="mt-3">
+            <span class="url-badge text-light">
+                <i class="bi bi-link-45deg me-1"></i>{{ url }}
+            </span>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Results section -->
+<section class="p-4" style="font-family: 'Segoe UI', Verdana, Tahoma, sans-serif;">
+    <div class="container">
+        
+        {% if has_error %}
+        <!-- Error State -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card error-card text-light p-4" style="border-radius: 15px;">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-exclamation-triangle" style="font-size: 4rem; color: #ff7675;"></i>
+                    </div>
+                    <h3 class="text-center mb-3">Analysis Error</h3>
+                    <p class="text-center opacity-75 mb-4">{{ error_message }}</p>
+                    
+                    {% if scrape_success %}
+                    <div class="alert alert-info bg-dark border-info text-light">
+                        <i class="bi bi-info-circle me-2"></i>
+                        The page was scraped successfully, but the analysis could not be completed. 
+                        This might be due to a missing or invalid API key.
+                    </div>
+                    {% endif %}
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'index' %}" class="btn back-btn text-light px-4 py-2">
+                            <i class="bi bi-arrow-left me-2"></i>Try Again
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% elif analysis_success %}
+        <!-- Success State -->
+        <div class="row g-4">
+            <!-- Grade Card -->
+            <div class="col-lg-4">
+                <div class="analysis-card text-light p-4 text-center h-100">
+                    <h4 class="section-header">Privacy Protection Grade</h4>
+                    
+                    {% if grade == 'A+' or grade == 'A' or grade == 'A-' %}
+                    <div class="grade-badge grade-a">{{ grade }}</div>
+                    <p class="grade-label text-success mt-3">Excellent Protection</p>
+                    <p class="opacity-75 mt-3">This policy demonstrates strong commitment to user privacy.</p>
+                    
+                    {% elif grade == 'B+' or grade == 'B' or grade == 'B-' %}
+                    <div class="grade-badge grade-b">{{ grade }}</div>
+                    <p class="grade-label" style="color: #74b9ff;">Good Protection</p>
+                    <p class="opacity-75 mt-3">This policy has good privacy practices with room for improvement.</p>
+                    
+                    {% elif grade == 'C+' or grade == 'C' or grade == 'C-' %}
+                    <div class="grade-badge grade-c">{{ grade }}</div>
+                    <p class="grade-label" style="color: #fdcb6e;">Average Protection</p>
+                    <p class="opacity-75 mt-3">This policy has some concerns you should be aware of.</p>
+                    
+                    {% elif grade == 'D+' or grade == 'D' or grade == 'D-' %}
+                    <div class="grade-badge grade-d">{{ grade }}</div>
+                    <p class="grade-label" style="color: #e17055;">Poor Protection</p>
+                    <p class="opacity-75 mt-3">This policy has significant privacy concerns.</p>
+                    
+                    {% elif grade == 'F' %}
+                    <div class="grade-badge grade-f">{{ grade }}</div>
+                    <p class="grade-label" style="color: #ff7675;">Inadequate Protection</p>
+                    <p class="opacity-75 mt-3">This policy fails to adequately protect user privacy.</p>
+                    
+                    {% else %}
+                    <div class="grade-badge grade-na">{{ grade }}</div>
+                    <p class="grade-label opacity-75">Grade Unavailable</p>
+                    <p class="opacity-75 mt-3">Unable to determine a grade for this policy.</p>
+                    {% endif %}
+                    
+                    <hr class="opacity-25 my-4">
+                    
+                    <div class="text-start">
+                        <h6 class="opacity-75 mb-2"><i class="bi bi-file-text me-2"></i>Source</h6>
+                        <p class="small opacity-50" style="word-break: break-all;">{{ title }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analysis Card -->
+            <div class="col-lg-8">
+                <div class="analysis-card text-light p-4 h-100">
+                    <h4 class="section-header"><i class="bi bi-clipboard-data me-2"></i>Detailed Analysis</h4>
+                    
+                    <div class="analysis-content">
+                        {{ analysis|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Preview (Collapsible) -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="analysis-card text-light p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0 opacity-75">
+                            <i class="bi bi-code-square me-2"></i>Scraped Content Preview
+                        </h5>
+                        <button class="btn btn-sm back-btn text-light" type="button" data-bs-toggle="collapse" data-bs-target="#contentPreview">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="collapse" id="contentPreview">
+                        <div class="preview-box p-3">
+                            {{ content_preview }}
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
-    </section>
-</body>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="{% url 'index' %}" class="btn back-btn text-light px-4 py-2 me-2">
+                    <i class="bi bi-arrow-left me-2"></i>Analyze Another Policy
+                </a>
+                <button onclick="window.print()" class="btn back-btn text-light px-4 py-2">
+                    <i class="bi bi-printer me-2"></i>Print Report
+                </button>
+            </div>
+        </div>
+        
+        {% else %}
+        <!-- No Results State -->
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="analysis-card text-light p-5">
+                    <i class="bi bi-search" style="font-size: 4rem; opacity: 0.5;"></i>
+                    <h3 class="mt-4">No Analysis Results</h3>
+                    <p class="opacity-75">Enter a privacy policy URL to get started.</p>
+                    <a href="{% url 'index' %}" class="btn back-btn text-light px-4 py-2 mt-3">
+                        <i class="bi bi-arrow-left me-2"></i>Go to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</section>
+
 {% endblock %}

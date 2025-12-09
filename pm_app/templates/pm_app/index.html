@@ -6,93 +6,201 @@
 
 {% block content %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <style>
     .transparent-input::placeholder {
-    color: rgba(255,255,255,0.7); /* placeholder color */
-}
+        color: rgba(255,255,255,0.7);
+    }
+    .transparent-input:focus {
+        background-color: rgba(255,255,255,0.1) !important;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+        border-color: #9b59b6 !important;
+    }
+    .btn-analyze {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        transition: all 0.3s ease;
+    }
+    .btn-analyze:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+    .api-key-section {
+        transition: all 0.3s ease;
+    }
+    .api-toggle-btn {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        color: rgba(255,255,255,0.7);
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+    }
+    .api-toggle-btn:hover {
+        border-color: rgba(255,255,255,0.6);
+        color: #fff;
+    }
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(35, 29, 56, 0.95);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .loading-overlay.show {
+        display: flex;
+    }
+    .spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(255,255,255,0.1);
+        border-top-color: #9b59b6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 </style>
 
-<body>
-    <!--top section-->
-    <section class="text-light p-5 text-center" style="font-family: Verdana, Tahoma, sans-serif;">
-        <div class="container">
-            <div class="flex-sm justify-content-center">
-                <img class="img-fluid " src="static/pm_app/pm_logo.png" style="width: 200px;"></img>
-            </div>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner mb-4"></div>
+    <h4 class="text-light">Analyzing Privacy Policy...</h4>
+    <p class="text-light opacity-75">This may take a moment</p>
+</div>
 
-            <div class="d-sm-flex justify-content-center">       
-                <h1 class="text-light fs-1 fw-bold">Policy Monster</h1>
-            </div>
-
+<!-- Top section -->
+<section class="text-light p-5 text-center" style="font-family: 'Segoe UI', Verdana, Tahoma, sans-serif;">
+    <div class="container">
+        <div class="flex-sm justify-content-center">
+            {% load static %}
+            <img class="img-fluid" src="{% static 'pm_app/pm_logo.png' %}" style="width: 180px;" alt="Policy Monster Logo">
         </div>
-    </section>
-    <!--URL input-->
-    <section class="text-light p-5 text-center">
-        <div class="d-sm-flex justify-content-center">
 
-                <div class="input-group input-group-lg mb-3" style="max-width: 1300px;">
-                    <input type="url" class="form-control transparent-input" 
-                    style="height: 60px; background-color: transparent !important; border: 1px solid #fff; color: #fff;" 
-                    placeholder="Paste URL here..." aria-label="Paste URL here..." aria-describedby="basic-addon2">
-                    <a href="results" class="btn ms-2 btn-dark text-light" style="height: 60px; border-radius: 10px !important; 
-                    padding-left: 25px; padding-right: 25px; border: 1px solid #fff; color: #fff;">Go</a>
-                </div>
-       
+        <div class="d-sm-flex justify-content-center mt-3">       
+            <h1 class="text-light fs-1 fw-bold">Policy Monster</h1>
         </div>
-    </section>
-    <!--boxes-->
-    <section class="p-5 blue-800" style="font-family: Verdana, Tahoma, sans-serif;">
-        <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md">
-                    <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100">
-                        <div class="card-body text-center">
-                            <h2 class="card-title mb-3">Our Mission</h2> 
-                            <p class="card-body">
-                             We know that almost no one is reading privacy policies or terms of service, and 
-                             we don't blame anyone for that. No one has the time! But these documents contain 
-                             important information about how the service will use your personal information. We 
-                             believe everyone has the right to be able to make informed decisions about their 
-                             online presence and data, and our mission is to make these decisions easier and faster.
-                            </p>
-                        </div>
-                    </div>
+        <p class="lead text-light opacity-75 mt-2">Understand privacy policies in seconds, not hours</p>
+    </div>
+</section>
+
+<!-- URL input -->
+<section class="text-light p-4 text-center">
+    <div class="container">
+        <form method="POST" action="{% url 'analyze' %}" id="analyzeForm">
+            {% csrf_token %}
+            <div class="d-flex flex-column align-items-center">
+                <div class="input-group input-group-lg mb-3" style="max-width: 900px;">
+                    <input type="url" name="url" class="form-control transparent-input" 
+                        style="height: 60px; background-color: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 10px 0 0 10px;" 
+                        placeholder="Paste privacy policy URL here..." 
+                        aria-label="Paste URL here..."
+                        required>
+                    <button type="submit" class="btn btn-analyze text-light" 
+                        style="height: 60px; border-radius: 0 10px 10px 0; padding-left: 30px; padding-right: 30px;">
+                        <i class="bi bi-search me-2"></i>Analyze
+                    </button>
                 </div>
-                <div class="col-md">
-                    <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100">
-                        <div class="card-body text-center">
-                            <h2 class="card-title mb-3">How it Works</h2>
-                            <p class="card-body">
-                            Policy Monster makes it fast and easy to find the privacy policy or ToS
-                            of a website, no downloading files or goose-chasing necessary. Simply 
-                            enter the URL and Policy Monster will automatically locate the policy
-                            and get right to work. You will be automatically redirected to the results page.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100">
-                        <div class="card-body text-center">
-                            <h2 class="card-title mb-3">Support</h2>
-                            <p class="card-body">
-                                We are a group of students who made this website for a group project as 
-                                partial fulfillment for CS4930: Privacy and Censorship. If you would like to
-                                pay us lots of money to continue to upkeep this website, please email us!
-                            </p>
-                        </div>
-                    </div>
+                
+                <!-- API Key Toggle -->
+                <button type="button" class="btn api-toggle-btn mb-3" onclick="toggleApiKey()">
+                    <i class="bi bi-key me-1"></i> Add OpenAI API Key
+                </button>
+                
+                <!-- API Key Input (hidden by default) -->
+                <div class="api-key-section mb-3" id="apiKeySection" style="display: none; max-width: 600px; width: 100%;">
+                    <input type="password" name="api_key" class="form-control transparent-input" 
+                        style="background-color: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff;"
+                        placeholder="Enter your OpenAI API key (sk-...)">
+                    <small class="text-light opacity-50 d-block mt-2">
+                        Your API key is used only for this request and is not stored.
+                    </small>
                 </div>
             </div>
+        </form>
+    </div>
+</section>
+
+<!-- Feature boxes -->
+<section class="p-5" style="font-family: 'Segoe UI', Verdana, Tahoma, sans-serif;">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md">
+                <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100" style="border-radius: 15px;">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h2 class="card-title mb-3 h4">Our Mission</h2> 
+                        <p class="card-text opacity-75">
+                         We know that almost no one reads privacy policies or terms of service, and 
+                         we don't blame anyone for that. No one has the time! But these documents contain 
+                         important information about how services use your personal data. We 
+                         believe everyone has the right to make informed decisions about their 
+                         online presence, and our mission is to make that easier and faster.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100" style="border-radius: 15px;">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <h2 class="card-title mb-3 h4">How it Works</h2>
+                        <p class="card-text opacity-75">
+                        Simply paste the URL of any privacy policy page. Policy Monster will 
+                        automatically scrape the content and use AI to analyze it, giving you 
+                        a clear protection grade (A+ to F), highlighting key concerns, 
+                        and explaining complex terms in plain language.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card bg-dark bg-opacity-50 border border-dark-subtle text-light h-100" style="border-radius: 15px;">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <h2 class="card-title mb-3 h4">What You Get</h2>
+                        <p class="card-text opacity-75">
+                            Get a comprehensive privacy report including a letter grade, 
+                            summary of data practices, red flags to watch out for, 
+                            your rights as a user, and actionable recommendations—all 
+                            in seconds instead of hours of reading.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-</body>
-</html>
+    </div>
+</section>
+
+<script>
+    function toggleApiKey() {
+        const section = document.getElementById('apiKeySection');
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    }
+    
+    document.getElementById('analyzeForm').addEventListener('submit', function() {
+        document.getElementById('loadingOverlay').classList.add('show');
+    });
+</script>
 
 {% endblock content %}
