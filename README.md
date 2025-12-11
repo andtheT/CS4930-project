@@ -14,6 +14,7 @@ Our proposed solution is a website that processes privacy policies and provides 
 ### Frameworks and Libraries
 - Bootstrap: HTML library
 - BeautifulSoup: web scraping
+- openai: AI interpreting
 
 ## Demo Instructions
 ### Mac Instructions 
@@ -21,7 +22,7 @@ Our proposed solution is a website that processes privacy policies and provides 
 2. Navigate to repository directory in VS Code Terminal: `cd path/to/directory`
 3. Optional, recommended: create a virtual environment `python3 -m venv venv_name` (Must have Python installed)
 4. Activate virtual environment `source env_name/bin/activate`
-5. Install Django `pip install Django`
+5. Install Django `pip install Django openai`
 6. Install dependencies `pip install requests beautifulsoup4`
 7. In the project directory, start development server `python3 manage.py runserver`
 8. In web browser, navigate to http://127.0.0.1:8000/home
@@ -31,7 +32,7 @@ Our proposed solution is a website that processes privacy policies and provides 
 2. Navigate to repository directory in VS Code Terminal: `cd path\to\directory`
 3. 3. Optional, recommended: create a virtual environment using `python3 -m venv venv_name` (Must have Python installed)
 4. Activate virtual environment using `venv_name\Scripts\activate.bat` or with PowerShell: `venv_name\Scripts\Activate.ps1`
-5. Install Django `pip install Django`
+5. Install Django `pip install Django openai`
 6. Install dependencies `pip install requests beautifulsoup4`
 7. In the project directory, start development server `python3 manage.py runserver`
 8. In web browser, navigate to http://127.0.0.1:8000/home
